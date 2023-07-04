@@ -65,3 +65,17 @@
 
 //15 Занятие
 console.log(4 + +'5' )
+
+const calc = (a,b) => console.log(a+b)
+calc(1,2)
+
+const fun = function() {
+	console.log('object')
+}
+
+fun()
+
+function gog(){
+	console.log('2')
+}
+gog()
