@@ -1,19 +1,18 @@
 
-let numberOfFilms
 
-function start(){
-	numberOfFilms = +prompt('Сколько фильмов уже посмотрели?', '')
+// function start(){
+// 	numberOfFilms = +prompt('Сколько фильмов уже посмотрели?', '')
 
-	while(numberOfFilms == '' || numberOfFilms == null || isNaN(numberOfFilms)){
-		numberOfFilms = +prompt('Сколько фильмов уже посмотрели?', '')
-	}
+// 	while(numberOfFilms == '' || numberOfFilms == null || isNaN(numberOfFilms)){
+// 		numberOfFilms = +prompt('Сколько фильмов уже посмотрели?', '')
+// 	}
 
-}
+// }
 
-start()
+// start()
 
 const personalMovieDB = {
-	count: numberOfFilms,
+	count: undefined,
 	movies: {
 
 	},
@@ -21,61 +20,118 @@ const personalMovieDB = {
 
 	},
 	genres: [],
+	start: function(){
+		let numberOfFilms
+		numberOfFilms = +prompt('Сколько фильмов уже посмотрели?', '')
+
+		while(numberOfFilms == '' || numberOfFilms == null || isNaN(numberOfFilms)){
+			numberOfFilms = +prompt('Сколько фильмов уже посмотрели?', '')
+		}
+		personalMovieDB.count = numberOfFilms
+	},
+	showMyDB: function() {
+		if(personalMovieDB.privat === false){
+			console.log(personalMovieDB)
+		
+		}
+	},
+	toggleVisibleMyBD: function(){
+		if(personalMovieDB.privat == false) personalMovieDB.privat = true
+		else if(personalMovieDB.privat == true) personalMovieDB.privat = false
+	},
+	writeYourGenres: function() {
+		let yourGenre
+		for (let i = 1; i <= 3; i++) {
+			yourGenre = prompt(`Ваш любимый жанр под номером ${i}`, '')
+			if(yourGenre === null || yourGenre === '') {
+				i--
+				continue
+			}
+			personalMovieDB.genres[i-1] = yourGenre
+		}
+		personalMovieDB.genres.forEach((element, index) => {
+			`Любимый жанр ${index} - это ${element}`
+		})
+	},
+	detectPersonalLevel: function(){
+		if(personalMovieDB.count < 10) console.log('Просмотрено мало фильмов')
+		else if(personalMovieDB.count < 30) console.log('Вы классический зритель')
+		else if(personalMovieDB.count >= 30) console.log('Вы киноман')
+		else console.log('Произошла ошибка')
+	},
+	rememberMyFilms: function() {
+		for (let i = 0; i < 2; i++) {
+			let firstAnswer
+			let secondAnswer
+			do{
+				firstAnswer =  prompt('Один из последних просмотренных фильмов?', '').trim()
+			} while(firstAnswer === null || !(firstAnswer.length <= 50) || firstAnswer.length == '')
+		
+			do {
+				secondAnswer = prompt('Насколько оцените его?', '').trim()
+			} while (secondAnswer === null || !(secondAnswer.length <= 50) || secondAnswer.length == '')
+	
+			personalMovieDB.movies[firstAnswer] = secondAnswer
+		}
+	},
 	privat: false
 }
 
+// personalMovieDB.showMyDB()
+// personalMovieDB.toggleVisibleMyBD()
 
-function showMyDB() {
-	if(personalMovieDB.privat == false){
-		console.log(personalMovieDB)
-	}
-}
 
-showMyDB()
+personalMovieDB.start()
+personalMovieDB.writeYourGenres()
 
-let yourGenre
+// function showMyDB() {
+// 	if(personalMovieDB.privat == false){
+// 		console.log(personalMovieDB)
+// 	}
+// }
 
-function writeYourGenres() {
-	for (let i = 1; i <= 3; i++) {
+// showMyDB()
+
+// 
+
+// function writeYourGenres() {
+// 	for (let i = 1; i <= 3; i++) {
 		
-		yourGenre = prompt(`Ваш любимый жанр под номером ${i}`, '')
-		personalMovieDB.genres[i-1] = yourGenre
-	}
-}
+// 		yourGenre = prompt(`Ваш любимый жанр под номером ${i}`, '')
+// 		personalMovieDB.genres[i-1] = yourGenre
+// 	}
+// }
 
-writeYourGenres()
+// writeYourGenres()
 
 
-function detectPersonalLevel(){
-	if(personalMovieDB.count < 10) console.log('Просмотрено мало фильмов');
-	else if(personalMovieDB.count < 30) console.log('Вы классический зритель');
-	else if(personalMovieDB.count >= 30) console.log('Вы киноман');
-	else console.log('Произошла ошибка');
-}
+// function detectPersonalLevel(){
+// 	if(personalMovieDB.count < 10) console.log('Просмотрено мало фильмов');
+// 	else if(personalMovieDB.count < 30) console.log('Вы классический зритель');
+// 	else if(personalMovieDB.count >= 30) console.log('Вы киноман');
+// 	else console.log('Произошла ошибка');
+// }
 
-detectPersonalLevel()
+// detectPersonalLevel()
 
-const firstQuestion = 'Один из последних просмотренных фильмов?'
-const secondQuestion = 'Насколько оцените его?'
-
-function rememberMyFilms(){
-	for (let i = 0; i < 2; i++) {
-		let firstAnswer
-		let secondAnswer
-		do{
-			firstAnswer =  prompt(firstQuestion, '')
-		} while(firstAnswer === null || !(firstAnswer.length <= 50) || firstAnswer.length == '')
+// function rememberMyFilms(){
+// 	for (let i = 0; i < 2; i++) {
+// 		let firstAnswer
+// 		let secondAnswer
+// 		do{
+// 			firstAnswer =  prompt('Один из последних просмотренных фильмов?', '').trim()
+// 		} while(firstAnswer === null || !(firstAnswer.length <= 50) || firstAnswer.length == '')
 		
-		do {
-			secondAnswer = prompt(secondQuestion, '')
-		} while (secondAnswer === null || !(secondAnswer.length <= 50) || secondAnswer.length == '')
+// 		do {
+// 			secondAnswer = prompt('Насколько оцените его?', '').trim()
+// 		} while (secondAnswer === null || !(secondAnswer.length <= 50) || secondAnswer.length == '')
 	
-		personalMovieDB.movies[firstAnswer] = secondAnswer
+// 		personalMovieDB.movies[firstAnswer] = secondAnswer
 		
-	}
-}
+// 	}
+// }
 
-rememberMyFilms()
+// rememberMyFilms()
 
 // const firstAnswer1 = prompt(firstQuestion, '')
 // const secondAnswer1 = prompt(secondQuestion, '')
@@ -86,7 +142,7 @@ rememberMyFilms()
 // personalMovieDB.movies[firstAnswer1] = secondAnswer1
 // personalMovieDB.movies[firstAnswer2] = secondAnswer2
 
-console.log(personalMovieDB)
+
 
 // first: for (let i = 1; i < 5; i++) {
 // 	for (let j = 1; j <= i; j++) {
